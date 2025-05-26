@@ -1,6 +1,6 @@
 lint: flake8 packages tests
 test: pytest
-build: python setup.py sdist bdist_wheel
+build: rm -rf build dist && python setup.py sdist bdist_wheel
 publish: twine upload dist/*
 
 
