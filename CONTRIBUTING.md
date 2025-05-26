@@ -32,14 +32,6 @@ Thank you for being interested in this project! We are excited to have you here.
     pip install -e '.[dev]'
     ```
 
-## Running Tests
-
-To run the tests, use the following command:
-
-```bash
-unrun test
-```
-
 ## Code Style
 
 We follow [PEP 8](https://pep8.org/) style guide for Python code. You can check the code style by running:
@@ -48,7 +40,14 @@ We follow [PEP 8](https://pep8.org/) style guide for Python code. You can check 
 unrun lint
 ```
 
-<!--
+## Running Tests
+
+To run the tests, use the following command:
+
+```bash
+unrun test
+```
+
 # For Owners
 ## Build
 To build the package, use the following command:
@@ -63,4 +62,4 @@ To publish a new version, you can use the following command:
 ```bash
 unrun publish
 ```
--->
+

@@ -32,7 +32,7 @@ def load(file: str, console: Console) -> dict:
         return None
 
 
-def parse(key: str, object: dict, console: Console) -> str:
+def parse_command(key: str, extra: str, object: dict, console: Console):
     keys = key.split(".")
     command = object
     for k in keys:
@@ -45,9 +45,13 @@ def parse(key: str, object: dict, console: Console) -> str:
             )
             return None
     if isinstance(command, str):
-        return command
+        return f"{command} {extra}" if extra else command
     elif isinstance(command, list):
-        return " && ".join(command)
+        return " && ".join([
+            f"{cmd} {extra}"
+            if extra else cmd
+            for cmd in command
+        ])
     else:
         error(
             f"Value for key '{key}' is not a string or list.",
@@ -56,63 +60,69 @@ def parse(key: str, object: dict, console: Console) -> str:
         return None
 
 
+def parse_filename(file) -> str:
+    filename = file if file else os.getenv("UNRUN_FILE")
+    if not filename:
+        f = os.path.expanduser("~/unrun.config.yaml")
+        if os.path.exists(f):
+            with open(f, "r") as file:
+                try:
+                    config = yaml.safe_load(file)
+                    filename = config.get("file", "unrun.yaml")
+                except yaml.YAMLError:
+                    filename = "unrun.yaml"
+        else:
+            filename = "unrun.yaml"
+    if not filename.endswith(".yaml"):
+        filename += ".yaml"
+    return filename
+
+
+def parse_extra(extra: list, unknown: list) -> str:
+    result = []
+    if extra and unknown:
+        result = extra + unknown
+    elif extra:
+        result = extra
+    elif unknown:
+        result = unknown
+    return " ".join(result)
+
+
 def main():
     console = Console()
     parser = argparse.ArgumentParser(
-        description="Run commands from `unrun.yaml`"
+        description="Run commands from `.yaml` files using unrun.",
+        epilog="Example: unrun my_command",
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("key", help="The key of the command to run from unrun.yaml")
-    args = parser.parse_args()
+    parser.add_argument("key", help="The key of the command to run from `.yaml`")
+    parser.add_argument("--file", "-f", default=None, help="Path to the `.yaml`")
+    parser.add_argument("extra", nargs="*", help="Extra arguments to pass to the command")
+    args, unknown = parser.parse_known_args()
 
-    config = load("unrun.yaml", console)
+    key, file = args.key, args.file
+    extra = parse_extra(args.extra, unknown)
+
+    filename = parse_filename(file)
+
+    config = load(filename, console)
     if config is None:
         return
 
-    command = parse(args.key, config, console)
+    command = parse_command(key, extra, config, console)
     if command is None:
         return
 
     console.print(
         Panel(
-            Syntax(
-                command, "bash",
-                theme="monokai",
-                line_numbers=False
-            ),
-            title=Text(f"Running command for key '{args.key}'", style="bold blue")
+            Syntax(command, "bash", word_wrap=True),
+            title=Text(f"Running command for key '{args.key}'", style="bold blue"),
         )
     )
 
     try:
-        # Prepare environment for the subprocess
-        # This helps with Unicode encoding issues on Windows,
-        # especially when tools like 'twine' use 'rich' for output.
-        process_env = os.environ.copy()
-        process_env["PYTHONIOENCODING"] = "utf-8"
-        process_env["PYTHONUTF8"] = "1"
-
-        process = subprocess.Popen(
-            command, shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",  # Ensure the parent process decodes output as UTF-8
-            errors="replace",  # How to handle decoding errors if any (though unlikely for rich)
-            env=process_env    # Pass the modified environment to the subprocess
-        )
-        stdout, stderr = process.communicate()
-
-        if stdout:
-            console.print(Text("Output:", style="bold green"))
-            console.print(stdout.strip())
-        if stderr:
-            console.print(Text("Error:", style="bold red"))
-            console.print(stderr.strip())
-        if not stdout and not stderr:
-            console.print(
-                Text("No output or error from the command.", style="bold green")
-            )
-
+        subprocess.run(command, shell=True)
     except Exception as e:
         error(
             f"An unexpected error occurred: {e}",

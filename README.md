@@ -35,7 +35,7 @@ Output:
 Hello, world!
 ```
 
-### Nested Commands
+### Nested Command
 You can run nested commands by specifying the full path:
 
 ```bash
@@ -48,7 +48,7 @@ Output:
 This is foo bar
 ```
 
-### List Commands
+### List Command
 To run all commands under a key that contains a list, you can simply specify the key:
 
 ```bash
@@ -61,6 +61,12 @@ Output:
 This is baz item 1
 This is baz item 2
 ```
+
+### Arguments
+
+- `key`: The key of the command to run.
+- `--file`: Specify a custom YAML file (default is `unrun.yaml`).
+- `extra`: Additional arguments to pass after each command.
 
 ## License
 

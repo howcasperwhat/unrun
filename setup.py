@@ -1,18 +1,19 @@
-import setuptools
+from setuptools import setup, find_packages
+
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(
+setup(
     name="unrun",
-    version="0.1.0",
+    version="0.2.0",
     author="Casper Huang",
     author_email="casper.w.huang@qq.com",
     description="A small example package",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/howcasperwhat/unrun",
-    packages=setuptools.find_packages(where="packages"),
+    packages=find_packages(where="packages"),
     package_dir={'': 'packages'},
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -34,6 +35,7 @@ setuptools.setup(
             "pytest",
             "flake8",
             "twine",
+            "wheel"
         ],
     },
 )
