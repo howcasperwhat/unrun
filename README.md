@@ -1,4 +1,4 @@
-# UNRun
+# UnRun
 
 A simple CLI tool to run commands from a YAML file.
 
