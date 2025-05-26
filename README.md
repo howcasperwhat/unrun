@@ -49,7 +49,7 @@ This is foo bar
 ```
 
 ### List Commands
-You can list all available commands:
+To run all commands under a key that contains a list, you can simply specify the key:
 
 ```bash
 unrun baz
@@ -63,4 +63,5 @@ This is baz item 2
 ```
 
 ## License
-[MIT License](https://opensource.org/license/mit/)
+
+[MIT License](https://github.com/howcasperwhat/unrun/blob/main/LICENSE)
