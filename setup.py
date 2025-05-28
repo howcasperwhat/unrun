@@ -9,7 +9,7 @@ setup(
     version="0.2.0",
     author="Casper Huang",
     author_email="casper.w.huang@qq.com",
-    description="A small example package",
+    description="A simple CLI tool to run commands from a YAML file.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/howcasperwhat/unrun",
