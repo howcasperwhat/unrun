@@ -29,6 +29,7 @@ setup(
     install_requires=[
         'PyYAML',
         'rich',
+        'InquirerPy',
     ],
     extras_require={
         "dev": [

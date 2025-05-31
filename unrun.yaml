@@ -1,12 +1,15 @@
-lint: flake8 packages tests
+lint: flake8
 test: pytest
-build: rm -rf build dist && python setup.py sdist bdist_wheel
+build: !and
+    - rm -rf build dist
+    - python setup.py sdist bdist_wheel
 publish: twine upload dist/*
 
+full_greeting: !; ["echo 1", "echo 2", "echo 3"]
 
 hello: echo "Hello, world!"
 foo:
     bar: echo "This is foo bar"
-baz:
+baz: !;
     - echo "This is baz item 1"
     - echo "This is baz item 2"
