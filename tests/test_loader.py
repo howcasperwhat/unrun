@@ -1,9 +1,9 @@
 import pytest, yaml
-from utils.loader import norm_config, load_config, join_constructor
+from utils.loader import norm_scripts, load_scripts, join_constructor
 from unittest.mock import patch, mock_open, Mock
 
 
-test_norm_config_data = [
+test_norm_scripts_data = [
     (1, "1"),
     (1.23, "1.23"),
     (None, "None"),
@@ -43,39 +43,39 @@ test_norm_config_data = [
 ]
 
 
-@pytest.mark.parametrize("input_data, expected_output", test_norm_config_data)
-def test_norm_config_parameterized(input_data, expected_output):
-    assert norm_config(input_data) == expected_output
+@pytest.mark.parametrize("input_data, expected_output", test_norm_scripts_data)
+def test_norm_scripts_parameterized(input_data, expected_output):
+    assert norm_scripts(input_data) == expected_output
 
 
-def test_load_config_found():
+def test_load_scripts_found():
     with patch('yaml.safe_load') as mock_yaml_load, \
          patch('builtins.open', new_callable=mock_open) as mock_file:
 
         mock_yaml_load.return_value = {'key': 'value'}
-        result = load_config('dummy_file.yaml')
+        result = load_scripts('dummy_file.yaml')
 
         mock_file.assert_called_once_with('dummy_file.yaml', 'r')
         assert result == {'key': 'value'}
 
 
-def test_load_config_empty():
+def test_load_scripts_empty():
     with patch('utils.loader.add_constructors', return_value=None), \
          patch('builtins.open', mock_open(read_data='')):
 
-        result = load_config('empty_file.yaml')
+        result = load_scripts('empty_file.yaml')
         assert result == {}
 
 
-def test_load_config_not_found():
+def test_load_scripts_not_found():
     with patch('builtins.open', side_effect=FileNotFoundError):
-        result = load_config('non_existent_file.yaml')
+        result = load_scripts('non_existent_file.yaml')
         assert result is None
 
 
-def test_load_config_yaml_error():
+def test_load_scripts_yaml_error():
     with patch('builtins.open', side_effect=yaml.YAMLError):
-        result = load_config('invalid_yaml.yaml')
+        result = load_scripts('invalid_yaml.yaml')
         assert result is None
 
 

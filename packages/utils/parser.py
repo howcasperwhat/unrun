@@ -41,9 +41,14 @@ def parse_command(key: Optional[str], config: Union[dict, list, str]) -> Optiona
     return results
 
 
-def parse_filename(file: Optional[str]) -> str:
-    filename = file if file else os.getenv("UNRUN_FILE")
-    if not filename:
+def parse_settings(
+        key: str,
+        default: Optional[str] = None,
+        safety: Optional[str] = None,
+        after: Optional[callable] = None
+) -> Optional[str]:
+    value = default if default else os.getenv(f"UNRUN_{key.upper()}")
+    if value is None:
         local_f = os.path.join(os.getcwd(), "unrun.config.yaml")
         global_f = os.path.expanduser("~/unrun.config.yaml")
         if os.path.exists(local_f) and os.path.isfile(local_f):
@@ -56,14 +61,22 @@ def parse_filename(file: Optional[str]) -> str:
             with open(f, "r") as file:
                 try:
                     config = yaml.safe_load(file)
-                    filename = config.get("file", "unrun.yaml")
+                    value = config.get(key, safety)
                 except yaml.YAMLError:
-                    filename = "unrun.yaml"
+                    value = safety
         else:
-            filename = "unrun.yaml"
-    if not filename.endswith(".yaml"):
-        filename += ".yaml"
-    return filename
+            value = safety
+    value = after(value) if after else value
+    return value
+
+
+def parse_filename(file: Optional[str]) -> str:
+    return parse_settings(
+        key="file",
+        default=file,
+        safety="unrun.yaml",
+        after=lambda x: x if x.endswith(".yaml") else f"{x}.yaml"
+    )
 
 
 def parse_extra(extra: list, unknown: list) -> Optional[str]:

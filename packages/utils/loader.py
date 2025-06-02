@@ -39,22 +39,22 @@ def add_constructors() -> None:
     )
 
 
-def norm_config(config) -> Union[dict, list, str]:
+def norm_scripts(config) -> Union[dict, list, str]:
     if isinstance(config, list):
-        return [norm_config(item) for item in config]
+        return [norm_scripts(item) for item in config]
     elif isinstance(config, dict):
-        return {key: norm_config(value) for key, value in config.items()}
+        return {key: norm_scripts(value) for key, value in config.items()}
     return str(config)
 
 
-def load_config(file: str) -> Optional[Union[dict, list, str]]:
+def load_scripts(file: str) -> Optional[Union[dict, list, str]]:
     add_constructors()
     try:
         with open(file, "r") as f:
             config = yaml.safe_load(f)
         if config is None:
             config = {}
-        return norm_config(config)
+        return norm_scripts(config)
     except FileNotFoundError:
         error(f"`{file}` not found in the current directory.")
         config = None

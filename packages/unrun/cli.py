@@ -5,8 +5,8 @@ from rich.text import Text
 from rich.syntax import Syntax
 
 from utils.console import console, error
-from utils.loader import load_config
-from utils.parser import parse_extra, parse_command, parse_filename
+from utils.loader import load_scripts
+from utils.parser import parse_extra, parse_command, parse_settings
 from utils.selector import select
 
 
@@ -24,13 +24,18 @@ def main():
     key, file = args.key, args.file
     extra = parse_extra(args.extra, unknown)
 
-    filename = parse_filename(file)
+    filename = parse_settings(
+        key="file",
+        default=file,
+        safety="unrun.yaml",
+        after=lambda x: x if x.endswith(".yaml") else f"{x}.yaml"
+    )
 
-    config = load_config(filename)
-    if config is None:
+    scripts = load_scripts(filename)
+    if scripts is None:
         return
 
-    commands = parse_command(key, config)
+    commands = parse_command(key, scripts)
     if commands is None:
         return
 
