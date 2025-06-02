@@ -1,6 +1,6 @@
 import importlib, io
 from unittest.mock import patch
-from utils.console import error
+from utils.console import template
 from rich.console import Console
 
 
@@ -10,14 +10,14 @@ def test_singleton():
     assert console_1 is console_2, "Console instances are not the same singleton instance."
 
 
-def test_error():
+def test_template():
     message_content = "Test message"
     title_content = "Test title"
 
     test_console_instance = Console(file=io.StringIO())
 
     with patch('utils.console.console', test_console_instance):
-        error(message_content, title=title_content)
+        template(message_content, title=title_content, color="blue")
 
     captured_text = test_console_instance.file.getvalue()
 

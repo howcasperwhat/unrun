@@ -4,7 +4,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.syntax import Syntax
 
-from utils.console import console, error
+from utils.console import console, error, warning
 from utils.loader import load_scripts
 from utils.parser import parse_extra, parse_command
 from utils.selector import select
@@ -38,12 +38,7 @@ def main():
 
     command = select(commands)
     if command is None:
-        console.print(
-            Panel(
-                Text("No command selected. Exiting.", style="bold yellow"),
-                title=Text("No Command Selected", style="bold yellow")
-            )
-        )
+        warning("No command selected. Exiting.")
         return
 
     if extra:
