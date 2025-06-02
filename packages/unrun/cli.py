@@ -16,7 +16,7 @@ def main():
         epilog="Example: unrun my_command",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("key", default=None, help="The key of the command to run from `.yaml`")
+    parser.add_argument("key", nargs="?", default=None, help="The key of the command to run from `.yaml`")
     parser.add_argument("--file", "-f", default=None, help="Path to the `.yaml`")
     parser.add_argument("extra", nargs="*", help="Extra arguments to pass to the command")
     args, unknown = parser.parse_known_args()
@@ -29,6 +29,7 @@ def main():
     config = load_config(filename)
     if config is None:
         return
+
     commands = parse_command(key, config)
     if commands is None:
         return

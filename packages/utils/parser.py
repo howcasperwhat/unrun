@@ -4,6 +4,9 @@ import os, yaml
 
 
 def parse_command(key: Optional[str], config: Union[dict, list, str]) -> Optional[Union[dict, list, str]]:
+    if key is None:
+        return config
+
     if isinstance(config, str):
         if key is None:
             return config
