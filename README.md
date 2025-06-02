@@ -1,6 +1,11 @@
 # UnRun
 
-A simple CLI tool to run commands from a YAML file.
+[![PyPI downloads per month](https://img.shields.io/pypi/dm/unrun.svg?color=BD976A)](https://pypi.org/project/unrun/)
+[![PyPI version](https://img.shields.io/pypi/v/unrun.svg?color=blue)](https://pypi.org/project/unrun/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/howcasperwhat/unrun.svg?color=red)](https://github.com/howcasperwhat/unrun/commits/main)
+[![GitHub issues](https://img.shields.io/github/issues/howcasperwhat/unrun.svg?color=63ba83)](https://github.com/howcasperwhat/unrun/issues)
+
+:rocket: A simple CLI tool to run commands from a YAML file.
 
 ## Installation
 
@@ -29,10 +34,10 @@ You can run a single command by specifying its key:
 unrun hello
 ```
 
-Output:
+Run the command:
 
-```
-Hello, world!
+```bash
+echo "Hello, world!"
 ```
 
 ### Nested Command
@@ -42,10 +47,10 @@ You can run nested commands by specifying the full path:
 unrun foo.bar
 ```
 
-Output:
+Run the command:
 
-```
-This is foo bar
+```bash
+echo "This is foo bar"
 ```
 
 ### List Command
@@ -55,12 +60,13 @@ To run all commands under a key that contains a list, you can simply specify the
 unrun baz
 ```
 
-Output:
+Run the commands:
 
+```bash
+echo "This is baz item 1" && echo "This is baz item 2"
 ```
-This is baz item 1
-This is baz item 2
-```
+
+Supports `!and`, `!or` and `!;` YAML tags to combine commands.
 
 ### Arguments
 
