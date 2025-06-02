@@ -6,8 +6,9 @@ from rich.syntax import Syntax
 
 from utils.console import console, error
 from utils.loader import load_scripts
-from utils.parser import parse_extra, parse_command, parse_settings
+from utils.parser import parse_extra, parse_command
 from utils.selector import select
+from utils.config import setup_config
 
 
 def main():
@@ -21,17 +22,12 @@ def main():
     parser.add_argument("extra", nargs="*", help="Extra arguments to pass to the command")
     args, unknown = parser.parse_known_args()
 
-    key, file = args.key, args.file
+    key = args.key
     extra = parse_extra(args.extra, unknown)
 
-    filename = parse_settings(
-        key="file",
-        default=file,
-        safety="unrun.yaml",
-        after=lambda x: x if x.endswith(".yaml") else f"{x}.yaml"
-    )
+    config = setup_config(args)
 
-    scripts = load_scripts(filename)
+    scripts = load_scripts(config["file"])
     if scripts is None:
         return
 
