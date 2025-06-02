@@ -16,7 +16,7 @@ Create an `unrun.yaml` file in your project root:
 hello: echo "Hello, world!"
 foo:
     bar: echo "This is foo bar"
-baz:
+baz: !and
     - echo "This is baz item 1"
     - echo "This is baz item 2"
 ```
