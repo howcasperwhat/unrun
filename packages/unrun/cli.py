@@ -34,6 +34,15 @@ def main():
         return
 
     command = select(commands)
+    if command is None:
+        console.print(
+            Panel(
+                Text("No command selected. Exiting.", style="bold yellow"),
+                title=Text("No Command Selected", style="bold yellow")
+            )
+        )
+        return
+
     if extra:
         command += f" {extra}"
 

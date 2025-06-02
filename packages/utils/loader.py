@@ -34,7 +34,7 @@ def add_constructors() -> None:
     )
 
 
-def norm_config(config: Union[dict, list, str]) -> Union[dict, list, str]:
+def norm_config(config) -> Union[dict, list, str]:
     if isinstance(config, list):
         return [norm_config(item) for item in config]
     elif isinstance(config, dict):

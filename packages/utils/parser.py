@@ -32,6 +32,9 @@ def parse_command(key: Optional[str], config: Union[dict, list, str]) -> Optiona
         error(f"Key '{key}' not found in the object.")
         return None
 
+    if len(results) == 1:
+        results = results[0]
+
     return results
 
 

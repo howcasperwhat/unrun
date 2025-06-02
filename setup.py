@@ -33,6 +33,7 @@ setup(
     ],
     extras_require={
         "dev": [
+            "pytest-cov",
             "pytest",
             "flake8",
             "twine",
