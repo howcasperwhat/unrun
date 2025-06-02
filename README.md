@@ -5,7 +5,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/howcasperwhat/unrun.svg?color=red)](https://github.com/howcasperwhat/unrun/commits/main)
 [![GitHub issues](https://img.shields.io/github/issues/howcasperwhat/unrun.svg?color=63ba83)](https://github.com/howcasperwhat/unrun/issues)
 
-:rocket: A simple CLI tool to run commands from a YAML file.
+🚀 A simple CLI tool to run commands from a YAML file.
 
 ## Installation
 

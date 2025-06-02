@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="unrun",
-    version="0.3.1",
+    version="0.3.2",
     author="Casper Huang",
     author_email="casper.w.huang@qq.com",
     description="A simple CLI tool to run commands from a YAML file.",

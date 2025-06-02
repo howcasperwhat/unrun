@@ -27,6 +27,11 @@ def add_constructors() -> None:
         lambda loader, node: join_constructor(loader, node, ' ; '),
         Loader=yaml.SafeLoader
     )
+    yaml.add_constructor(
+        '!join',
+        lambda loader, node: join_constructor(loader, node, ' '),
+        Loader=yaml.SafeLoader
+    )
     yaml.add_multi_constructor(
         '!:',
         lambda loader, tag_suffix, node: join_constructor(loader, node, tag_suffix),
