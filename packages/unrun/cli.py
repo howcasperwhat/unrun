@@ -18,14 +18,15 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("key", nargs="?", default=None, help="The key of the command to run from `.yaml`")
+    parser.add_argument("--include", "-i", nargs="*", default=None, help="Include specific keys from the `.yaml`")
+    parser.add_argument("--exclude", "-e", nargs="*", default=None, help="Exclude specific keys from the `.yaml`")
     parser.add_argument("--file", "-f", default=None, help="Path to the `.yaml`")
     parser.add_argument("extra", nargs="*", help="Extra arguments to pass to the command")
     args, unknown = parser.parse_known_args()
+    config = setup_config(args)
 
     key = args.key
     extra = parse_extra(args.extra, unknown)
-
-    config = setup_config(args)
 
     scripts = load_scripts(config["file"])
     if scripts is None:

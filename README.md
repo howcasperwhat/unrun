@@ -68,11 +68,18 @@ echo "This is baz item 1" && echo "This is baz item 2"
 
 Supports `!and`, `!or` and `!;` YAML tags to combine commands.
 
-### Arguments
+### Configuration
 
-- `key`: The key of the command to run.
+#### Configure Priority
+1. CLI arguments
+2. Environment variables: `UNRUN_{key}`
+3. local `unrun.config.yaml`
+4. global `~/unrun.config.yaml`
+
+#### Available keys
 - `--file`: Specify a custom YAML file (default is `unrun.yaml`).
-- `extra`: Additional arguments to pass after each command.
+- `--include`: Include specified keys from the YAML file.
+- `--exclude`: Exclude specified keys from the YAML file.
 
 ## License
 

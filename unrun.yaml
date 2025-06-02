@@ -1,6 +1,8 @@
+$clear: &clear rm -rf build dist
+
 lint: flake8
 test: pytest . --cov=packages
 build: !and
-    - rm -rf build dist
+    - $clear
     - python setup.py sdist bdist_wheel
 publish: twine upload dist/*

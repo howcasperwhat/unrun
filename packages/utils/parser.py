@@ -70,15 +70,6 @@ def parse_settings(
     return value
 
 
-def parse_filename(file: Optional[str]) -> str:
-    return parse_settings(
-        key="file",
-        default=file,
-        safety="unrun.yaml",
-        after=lambda x: x if x.endswith(".yaml") else f"{x}.yaml"
-    )
-
-
 def parse_extra(extra: list, unknown: list) -> Optional[str]:
     result = []
     if extra and unknown:

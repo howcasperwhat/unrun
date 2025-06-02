@@ -8,7 +8,7 @@ default_config = {
         "after": lambda x: x if x.endswith(".yaml") else f"{x}.yaml",
     },
     "include": {
-        "safety": [],
+        "safety": ["*"],
         "after": None,
     },
     "exclude": {

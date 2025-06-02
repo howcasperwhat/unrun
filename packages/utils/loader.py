@@ -1,6 +1,8 @@
 import yaml
+from utils.config import config
 from utils.console import error
 from typing import Union, Optional
+from fnmatch import fnmatch
 
 
 def join_constructor(
@@ -39,12 +41,26 @@ def add_constructors() -> None:
     )
 
 
-def norm_scripts(config) -> Union[dict, list, str]:
-    if isinstance(config, list):
-        return [norm_scripts(item) for item in config]
-    elif isinstance(config, dict):
-        return {key: norm_scripts(value) for key, value in config.items()}
-    return str(config)
+def norm_scripts(scripts) -> Union[dict, list, str]:
+    if isinstance(scripts, list):
+        return [norm_scripts(item) for item in scripts]
+    elif isinstance(scripts, dict):
+        return {key: norm_scripts(value) for key, value in scripts.items()}
+    return str(scripts)
+
+
+def match(key: str) -> bool:
+    if not any(fnmatch(key, pat) for pat in config["include"]):
+        return False
+    if any(fnmatch(key, pat) for pat in config["exclude"]):
+        return False
+    return True
+
+
+def filter_scripts(scripts) -> Union[dict, list, str]:
+    if isinstance(scripts, dict):
+        return {key: filter_scripts(value) for key, value in scripts.items() if match(key)}
+    return scripts
 
 
 def load_scripts(file: str) -> Optional[Union[dict, list, str]]:
@@ -54,7 +70,7 @@ def load_scripts(file: str) -> Optional[Union[dict, list, str]]:
             config = yaml.safe_load(f)
         if config is None:
             config = {}
-        return norm_scripts(config)
+        return filter_scripts(norm_scripts(config))
     except FileNotFoundError:
         error(f"`{file}` not found in the current directory.")
         config = None
