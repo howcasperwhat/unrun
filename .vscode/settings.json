@@ -10,4 +10,7 @@
     "**/.hg/store/**": true,
     "**/__pycache__": true,
   },
+  "explorer.fileNesting.patterns": {
+    "unrun.yaml": "unrun.config.yaml",
+  }
 }

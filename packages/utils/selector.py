@@ -2,7 +2,7 @@ from InquirerPy import inquirer
 from typing import Union, Optional
 
 
-def select(_choices: Union[dict, list, str, None]) -> Optional[str]:
+def select(_choices: Optional[Union[dict, list, str]]) -> Optional[str]:
     if _choices is None or isinstance(_choices, str):
         return _choices
 

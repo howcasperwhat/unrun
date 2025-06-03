@@ -55,6 +55,6 @@ def main():
         subprocess.run(command, shell=True)
     except Exception as e:
         error(
-            f"An unexpected error occurred: {e}",
+            f"An unexpected error occurred:\n{e}",
             title="Unexpected Error"
         )
