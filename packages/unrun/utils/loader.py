@@ -1,6 +1,6 @@
 import yaml
-from utils.config import config
-from utils.console import error
+from unrun.utils.config import config
+from unrun.utils.console import error
 from typing import Union, Optional
 from fnmatch import fnmatch
 

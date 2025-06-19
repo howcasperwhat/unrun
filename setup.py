@@ -6,14 +6,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="unrun",
-    version="0.3.4",
+    version="0.3.6",
     author="Casper Huang",
     author_email="casper.w.huang@qq.com",
     description="A simple CLI tool to run commands from a YAML file.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/howcasperwhat/unrun",
-    packages=find_packages(where="packages"),
+    packages=find_packages(where="packages", include=["unrun*"]),
     package_dir={'': 'packages'},
     classifiers=[
         "Programming Language :: Python :: 3",

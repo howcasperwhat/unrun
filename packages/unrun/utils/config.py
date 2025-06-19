@@ -1,4 +1,4 @@
-from utils.parser import parse_settings
+from unrun.utils.parser import parse_settings
 
 config = {}
 

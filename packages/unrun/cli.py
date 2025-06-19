@@ -4,11 +4,11 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.syntax import Syntax
 
-from utils.console import console, error, warning
-from utils.loader import load_scripts
-from utils.parser import parse_extra, parse_command
-from utils.selector import select
-from utils.config import setup_config
+from unrun.utils.console import console, error, warning
+from unrun.utils.loader import load_scripts
+from unrun.utils.parser import parse_extra, parse_command
+from unrun.utils.selector import select
+from unrun.utils.config import setup_config
 
 
 def main():

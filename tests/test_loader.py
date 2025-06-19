@@ -1,5 +1,5 @@
 import pytest, yaml
-from utils.loader import norm_scripts, load_scripts, join_constructor
+from unrun.utils.loader import norm_scripts, load_scripts, join_constructor
 from unittest.mock import patch, mock_open, Mock
 
 
@@ -60,7 +60,7 @@ def test_load_scripts_found():
 
 
 def test_load_scripts_empty():
-    with patch('utils.loader.add_constructors', return_value=None), \
+    with patch('unrun.utils.loader.add_constructors', return_value=None), \
          patch('builtins.open', mock_open(read_data='')):
 
         result = load_scripts('empty_file.yaml')

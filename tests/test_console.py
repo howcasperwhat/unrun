@@ -1,12 +1,12 @@
 import importlib, io
 from unittest.mock import patch
-from utils.console import template
+from unrun.utils.console import template
 from rich.console import Console
 
 
 def test_singleton():
-    console_1 = importlib.import_module("utils.console").console
-    console_2 = importlib.import_module("utils.console").console
+    console_1 = importlib.import_module("unrun.utils.console").console
+    console_2 = importlib.import_module("unrun.utils.console").console
     assert console_1 is console_2, "Console instances are not the same singleton instance."
 
 
@@ -16,7 +16,7 @@ def test_template():
 
     test_console_instance = Console(file=io.StringIO())
 
-    with patch('utils.console.console', test_console_instance):
+    with patch('unrun.utils.console.console', test_console_instance):
         template(message_content, title=title_content, color="blue")
 
     captured_text = test_console_instance.file.getvalue()
